@@ -13,11 +13,18 @@
         {
             "id": 2,
             "titulo": "Erro de uncaught:exception no Cypress",
-            "descricao": "Na tentativa de automação dos teste pelo Cypress, foram encontrados erros de uncaught:exception no site, que impossibilitaram o uso da ferramenta mesmo seguindo todas as recomendações da documentação da API",
+            "descricao": "Na tentativa de automação dos teste pelo Cypress, foram encontrados erros de uncaught:exception no site. Mesmo seguindo a documentação da ferramanta os erros persistiram. Os erros são ignorados, mas as ações (click, asserções, etc) não são executados.",
             "detalhes": "Workarounds recomendados: https://docs.cypress.io/guides/references/error-messages.html#Page-Load-Errors e https://docs.cypress.io/api/events/catalog-of-events.html#Examples",
             "evidencias": [
                 "cypress-uncaughtexception.jpg"
             ]
+        },
+        {
+            "id": 3,
+            "titulo": "Sugestão de melhoria na catalogação dos cursos",
+            "descricao": "Na página de listagem dos cursos é exibida a quantidade total de cursos + assinaturas e na página de detalhes do professor é exibido somente a quantidade de cursos.",
+            "detalhes": "Criar categorias cursos e assinaturas similar ao da página de Resultados de Busca",
+            "evidencias": ""
         }
     ]
 }
