@@ -13,7 +13,7 @@ import webdriver.DriverFactory;
 public class Runner {
 
 	@AfterClass
-	public void closeDriver() {
+	public static void closeDriver() {
 		DriverFactory.quitDriver();
 	}
 
