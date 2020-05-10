@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+Test set: runner.RunCukesTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 1, Skipped: 0, Time elapsed: 53.975 sec <<< FAILURE! - in runner.RunCukesTest
+Validar detalhes dos cursos encontrados Por Professsor(Busca, filtragem e exibicao de detalhe dos cursos na homepage)  Time elapsed: 26.973 sec  <<< FAILURE!
+java.lang.AssertionError: 
+Curso: Assinatura Ilimitada 1 Ano - Cartão até 12 x
+Valor parcelado na pagina de listagem: 12 x R$ 199.97 = R$ 2400
+Valor total na pagina de detalhes: R$ 2399.64
+
+Validar filtros do resultado de busca(Busca, filtragem e exibicao de detalhe dos cursos na homepage)  Time elapsed: 3.439 sec  <<< ERROR!
+org.openqa.selenium.StaleElementReferenceException: 
+stale element reference: element is not attached to the page document
+  (Session info: chrome=81.0.4044.138)
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'NOX-PC', ip: '192.168.0.154', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_231'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.138, chrome: {chromedriverVersion: 81.0.4044.69 (6813546031a4b..., userDataDir: C:\Users\rafae\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:59669}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 76fee0373c01a4f35a20042fdf2ee23a
+
+Validar retorno da API na pesquisa de cursos(Busca, filtragem e exibicao de detalhe dos cursos na homepage)  Time elapsed: 22.906 sec  <<< FAILURE!
+java.lang.AssertionError: 
+Total de resultados na pagina: 66
+Total de resultados API: 58
+
