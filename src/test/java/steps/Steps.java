@@ -164,29 +164,6 @@ public class Steps {
 				+ resultadosAPI.size(), resultadosAPI.size() == resultadosPagina.size());
 	}
 
-	private List<JSONObject> listaResultadosAPI() {
-		List<JSONObject> resultadosAPI = new ArrayList<>();
-		boolean hasMore = true;
-		int i = 1;
-		while (hasMore) {
-			JSONObject jsonResponse = new JSONObject(
-					given().queryParams("q", "oab").queryParam("p", i).queryParam("tipo", "cursos").when()
-							.get("https://www.estrategiaconcursos.com.br/pesquisa/main/json/").then().statusCode(200)
-							.extract().body().asString());
-			JSONArray responseJSON = jsonResponse.getJSONArray("result");
-			responseJSON.forEach(x -> resultadosAPI.add(new JSONObject(x.toString())));
-			hasMore = jsonResponse.getBoolean("hasMore");
-			i++;
-		}
-		return resultadosAPI;
-	}
-
-	@E("^listar os resultados exibidos na pagina$")
-	public void listarOsResultadosExibidosNaPagina() throws Throwable {
-		resultadosPagina = carregaTodosResultadosPagina();
-
-	}
-
 	private List<JSONObject> listaResultadosCarregados() {
 		List<JSONObject> resultadosPaginaWeb = new ArrayList<>();
 		for (int i = 1; i <= driver.findElements(By.xpath("//section[@class='card-prod']")).size(); i++) {
@@ -229,6 +206,29 @@ public class Steps {
 			}
 		}
 		return listaResultadosCarregados();
+	}
+
+	@E("^listar os resultados exibidos na pagina$")
+	public void listarOsResultadosExibidosNaPagina() throws Throwable {
+		resultadosPagina = carregaTodosResultadosPagina();
+	
+	}
+
+	private List<JSONObject> listaResultadosAPI() {
+		List<JSONObject> resultadosAPI = new ArrayList<>();
+		boolean hasMore = true;
+		int i = 1;
+		while (hasMore) {
+			JSONObject jsonResponse = new JSONObject(
+					given().queryParams("q", "oab").queryParam("p", i).queryParam("tipo", "cursos").when()
+							.get("https://www.estrategiaconcursos.com.br/pesquisa/main/json/").then().statusCode(200)
+							.extract().body().asString());
+			JSONArray responseJSON = jsonResponse.getJSONArray("result");
+			responseJSON.forEach(x -> resultadosAPI.add(new JSONObject(x.toString())));
+			hasMore = jsonResponse.getBoolean("hasMore");
+			i++;
+		}
+		return resultadosAPI;
 	}
 
 }

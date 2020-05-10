@@ -1,6 +1,6 @@
 #language: pt
 @BuscaCursos
-Funcionalidade: Busca de cursos, filtragem de cursos e exibicao de detalhe dos cursos na homepage
+Funcionalidade: Busca, filtragem e exibicao de detalhe dos cursos na homepage
 
   Contexto: Acessar a pesquisa do cursos da professora Ena Loiola
     Dado que eu esteja na homepage da Estrategia Concursos
