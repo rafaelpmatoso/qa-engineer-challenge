@@ -23,9 +23,10 @@ Funcionalidade: Busca de cursos, filtragem de cursos e exibicao de detalhe dos c
     Entao os resultados serao exibidos de acordo com o filtro selecionado
 
   @OrdenacaoPorValor
-  Cenario: Validar ordenacao dos valores totais dos cursos
+  Cenario: Validar retorno da API na pesquisa de cursos
     Quando eu realizar a pesquisa na barra de busca
       | pesquisa |
       | OAB      |
     E selecionar o filtro 'Cursos'
-    E ordernar os cursos em order crescente de valor
+    E listar os resultados exibidos na pagina
+    Entao valido que todos os resultados retornados pela API sao exibidos

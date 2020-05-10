@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(strict = true, features = { "src/test/resources/features" }, glue = { "steps" }, tags = {
-		"@BuscaCursos and @OrdenacaoPorValor" })
+		"@OrdenacaoPorValor" })
 public class Runner {
 
 }
