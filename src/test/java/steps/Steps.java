@@ -185,6 +185,26 @@ public class Steps {
 				.executeScript("return document.querySelectorAll('section[class=card-prod]').length", "");
 	}
 
+	@E("^exibir os detalhes do pacote$")
+	public void exibirOsDetalhesDoPacote() throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Detalhes')]"))).click();
+	}
+
+	@Entao("^valido o desconto no pagamento a vista$")
+	public void validoODescontoNoPagamentoAVista() throws Throwable {
+		BigDecimal valorTotal = new BigDecimal(
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='from']"))).getText()
+						.trim().replaceAll("de R\\$ ", "").replace(".", "").replace(",", "."));
+		BigDecimal valorComDesconto = new BigDecimal(driver.findElement(By.xpath("//div[@class='value']")).getText()
+				.trim().replaceAll("por R\\$ ", "").replace(".", "").replace(",", "."));
+		String porcentagemDesconto = driver.findElement(By.xpath("//div[@class='details']")).getText().trim();
+		BigDecimal desconto = new BigDecimal(
+				porcentagemDesconto.substring(porcentagemDesconto.indexOf("(") + 1, porcentagemDesconto.length() - 2));
+		BigDecimal valorDescontoCalculado = valorTotal.multiply(desconto).multiply(new BigDecimal("0.01")).setScale(0,
+				RoundingMode.UP);
+		assertTrue(valorComDesconto.equals(valorDescontoCalculado));
+	}
+
 	private List<JSONObject> listAPIResults() {
 		List<JSONObject> apiResults = new ArrayList<>();
 		boolean hasMore = true;

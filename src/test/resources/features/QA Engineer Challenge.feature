@@ -1,8 +1,8 @@
 #language: pt
 @BuscaCursos
-Funcionalidade: Busca, filtragem e exibicao de detalhe dos cursos na homepage
+Funcionalidade: Busca, filtragem e exibicao de detalhes dos cursos na homepage
 
-  Contexto: Acessar a pesquisa do cursos da professora Ena Loiola
+  Contexto: 
     Dado que eu esteja na homepage da Estrategia Concursos
 
   @BuscaPorProfessor
@@ -13,6 +13,14 @@ Funcionalidade: Busca, filtragem e exibicao de detalhe dos cursos na homepage
     Entao eu valido se o valor do curso na pagina de listagem e igual ao valor na pagina de detalhes
     E verifico que o total do valor parcelado do curso corresponde ao valor total
     E que a quantidade de cursos exibidos na pagina de listagem e igual a quantidade de cursos na pagina de detalhes
+
+  @AplicacaoDescontroPrecoAVista
+  Cenario: Validar filtros do resultado de busca
+    Quando eu realizar a pesquisa na barra de busca
+      | pesquisa |
+      | abin     |
+    E exibir os detalhes do pacote
+    Entao valido o desconto no pagamento a vista
 
   @FiltroResultadoBusca
   Cenario: Validar filtros do resultado de busca

@@ -9,7 +9,7 @@ import webdriver.DriverFactory;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(strict = true, monochrome = true, features = { "src/test/resources/features" }, glue = {
-		"steps" }, tags = { "@RetornoPesquisaAPI" })
+		"steps" }, tags = { "@AplicacaoDescontroPrecoAVista" })
 public class RunCukesTest {
 
 	@AfterClass
