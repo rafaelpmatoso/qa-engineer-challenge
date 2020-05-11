@@ -1,3 +1,5 @@
 /target/
 /qa-engineer-challenge/
 *.tmp
+qa-engineer-challenge/target/classes/.cucumber/cucumber.stepDefinitions.tmp
+qa-engineer-challenge/target/classes/.cucumber/cucumber.glue.tmp

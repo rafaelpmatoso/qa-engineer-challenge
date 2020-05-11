@@ -23,7 +23,17 @@ Java 1.8 or higher with the JAVA_HOME enviroment variable configured.
 
 Unzip the downloaded file in your computer.
 
-Open a command line utility and navigate to the downloaded folder.
+Open a command line utility and navigate to the downloaded directory.
+
+If you are on MacOS change the directory permissions using the following command:
+    
+    chmod +x mvnw
+
+You will need to update the chromedriver executable path in the config.properties file.
+
+Update the **webdriver.location** property with the path of executable downloaded from (https://chromedriver.chromium.org/downloads)
+
+    ex: webdriver.location
 
 Type the command below and wait for the project to build and start running the tests.
 
