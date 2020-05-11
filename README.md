@@ -35,7 +35,7 @@ Tip: If you are using MacOS change the directory permissions using the following
     
     chmod +x mvnw
 
-You will need to update the chromedriver executable path in the config.properties file.
+You will need to update the chromedriver executable path in the **config.properties** file.
 
 Update the **webdriver.location** property with the path of executable downloaded from https://chromedriver.chromium.org/downloads
 
