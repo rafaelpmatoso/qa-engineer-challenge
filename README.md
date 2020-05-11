@@ -25,6 +25,8 @@ Or simply downloading the [zip file](https://github.com/rapholtz/qa-engineer-cha
 
 Java 1.8 or higher with the **JAVA_HOME** enviroment variable configured.
 
+To run the tests a maven wrapper placed inside the project folder can be used, just follow the steps below.
+
 ## Run the tests
 
 Unzip the downloaded file in your computer.
