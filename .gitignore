@@ -1,1 +1,3 @@
 /target/
+/qa-engineer-challenge/
+*.tmp

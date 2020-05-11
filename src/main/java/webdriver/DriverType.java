@@ -1,6 +1,5 @@
 package webdriver;
 
-
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -17,6 +16,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
+import utils.PropertyReader;
+
 public enum DriverType implements DriverSetup {
 
 	FIREFOX {
@@ -30,7 +31,7 @@ public enum DriverType implements DriverSetup {
 	},
 	CHROME {
 		public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-			System.setProperty("webdriver.chrome.driver", "src/main/resources/webdriver/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", PropertyReader.get("webdriver.location"));
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--start-maximized");
 			return new ChromeDriver(options);

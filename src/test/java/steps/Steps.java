@@ -202,7 +202,7 @@ public class Steps {
 				porcentagemDesconto.substring(porcentagemDesconto.indexOf("(") + 1, porcentagemDesconto.length() - 2));
 		BigDecimal valorDescontoCalculado = valorTotal.multiply(desconto).multiply(new BigDecimal("0.01")).setScale(0,
 				RoundingMode.UP);
-		assertTrue(valorComDesconto.equals(valorDescontoCalculado));
+		assertTrue(valorComDesconto.equals(valorTotal.subtract(valorDescontoCalculado)));
 	}
 
 	private List<JSONObject> listAPIResults() {
