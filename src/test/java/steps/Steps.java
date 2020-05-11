@@ -37,7 +37,7 @@ public class Steps {
 	private WebDriver driver = DriverFactory.getDriver(DriverType.CHROME);
 	private WebDriverWait wait = new WebDriverWait(driver, 25);
 	private int totalCoursesAvailableInListPage;
-	private List<JSONObject> webPageResults;
+	private Long webPageResults;
 
 	@Dado("^que eu esteja na homepage da Estrategia Concursos$")
 	public void queEuEstejaNaHomepageDaEstrategiaConcursos() throws Throwable {
@@ -161,44 +161,18 @@ public class Steps {
 	@Entao("^valido que todos os resultados retornados pela API sao exibidos$")
 	public void validoQueTodosOsResultadosRetornadosPelaAPISaoExibidos() throws Throwable {
 		List<JSONObject> apiResults = listAPIResults();
-		assertTrue("Total de resultados na pagina: " + webPageResults.size() + "\nTotal de resultados API: "
-				+ apiResults.size(), apiResults.size() == webPageResults.size());
+		assertTrue(
+				"Total de resultados na pagina: " + webPageResults + "\nTotal de resultados API: " + apiResults.size(),
+				apiResults.size() == webPageResults);
 	}
 
-	private List<JSONObject> listResultsLoaded() {
-		List<JSONObject> webPageResults = new ArrayList<>();
-		for (int i = 1; i <= driver.findElements(By.xpath("//section[@class='card-prod']")).size(); i++) {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("nome",
-					driver.findElement(By.xpath("(//section[@class='card-prod']/h1/a)[" + i + "]")).getText());
-			String installmentsValues = driver.findElement(By.xpath("(//section[@class='card-prod']/span)[" + i + "]"))
-					.getText();
-			if (installmentsValues.equals("R$ 0,00")) {
-				jsonObject.put("valor", "0.00");
-				jsonObject.put("parcelas", "");
-				jsonObject.put("valor_parcela", JSONObject.NULL);
-			} else {
-				BigDecimal installmentValue = new BigDecimal(
-						installmentsValues.split("x R\\$ ")[1].replace(",", ".").trim());
-				BigDecimal installmentsNumber = new BigDecimal(
-						installmentsValues.split("x R\\$ ")[0].replace(",", ".").trim());
-				jsonObject.put("valor", installmentValue.multiply(installmentsNumber).toString());
-				jsonObject.put("parcelas", installmentsNumber.toString());
-				jsonObject.put("valor_parcela", installmentValue.toString());
-			}
-			jsonObject.put("url_comprar", driver
-					.findElement(By.xpath("(//section[@class='card-prod']/a[2])[" + i + "]")).getAttribute("href"));
-			webPageResults.add(jsonObject);
-		}
-		return webPageResults;
-
-	}
-
-	private List<JSONObject> loadAllResultsFromPage() throws InterruptedException {
+	@E("^listar os resultados exibidos na pagina$")
+	public void listarOsResultadosExibidosNaPagina() throws Throwable {
 		boolean moreResults = true;
 		while (moreResults) {
 			Thread.sleep(2000);
-			((JavascriptExecutor) driver).executeScript("window.scrollTo(0,document.body.scrollHeight);", "");
+			((JavascriptExecutor) driver)
+					.executeScript("document.querySelector('button[class=button-more]').scrollIntoView(false);", "");
 			WebElement buttonMoreResults = wait
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button-more']")));
 			try {
@@ -207,12 +181,8 @@ public class Steps {
 				moreResults = false;
 			}
 		}
-		return listResultsLoaded();
-	}
-
-	@E("^listar os resultados exibidos na pagina$")
-	public void listarOsResultadosExibidosNaPagina() throws Throwable {
-		webPageResults = loadAllResultsFromPage();
+		webPageResults = (Long) ((JavascriptExecutor) driver)
+				.executeScript("return document.querySelectorAll('section[class=card-prod]').length", "");
 	}
 
 	private List<JSONObject> listAPIResults() {
