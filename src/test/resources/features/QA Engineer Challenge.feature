@@ -22,7 +22,7 @@ Funcionalidade: Busca, filtragem e exibicao de detalhe dos cursos na homepage
     E selecionar o filtro 'Assinaturas'
     Entao os resultados serao exibidos de acordo com o filtro selecionado
 
-  @OrdenacaoPorValor
+  @RetornoPesquisaAPI
   Cenario: Validar retorno da API na pesquisa de cursos
     Quando eu realizar a pesquisa na barra de busca
       | pesquisa |

@@ -26,8 +26,8 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
-import object.Curso;
-import object.Cursos;
+import object.Course;
+import object.Courses;
 import utils.PropertyReader;
 import webdriver.DriverFactory;
 import webdriver.DriverType;
@@ -36,8 +36,8 @@ public class Steps {
 
 	private WebDriver driver = DriverFactory.getDriver(DriverType.CHROME);
 	private WebDriverWait wait = new WebDriverWait(driver, 25);
-	private int quantidadeCursosDisponiveisListagem;
-	private List<JSONObject> resultadosPagina;
+	private int totalCoursesAvailableInListPage;
+	private Long webPageResults;
 
 	@Dado("^que eu esteja na homepage da Estrategia Concursos$")
 	public void queEuEstejaNaHomepageDaEstrategiaConcursos() throws Throwable {
@@ -52,72 +52,72 @@ public class Steps {
 	}
 
 	@E("^acessar os cursos da professora '(.*?)'$")
-	public void acessarOsCursosDaProfessoraEnaLoiola(String parametroBusca) throws Throwable {
+	public void acessarOsCursosDaProfessoraEnaLoiola(String searchParameter) throws Throwable {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
 				driver.findElement(By.xpath("//button[contains(text(),'Todos os professores')]")));
-		WebElement linkCursosEnaLoiola = wait.until(ExpectedConditions.presenceOfElementLocated(
+		WebElement professorCoursesLink = wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//a[@href='https://www.estrategiaconcursos.com.br/cursosPorProfessor/ena-loiola-800/']")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", linkCursosEnaLoiola);
-		quantidadeCursosDisponiveisListagem = Integer.parseInt(driver.findElement(By
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", professorCoursesLink);
+		totalCoursesAvailableInListPage = Integer.parseInt(driver.findElement(By
 				.xpath("//a[@href='https://www.estrategiaconcursos.com.br/cursosPorProfessor/ena-loiola-800/']/../div"))
 				.getText().replaceAll("[^\\d.]", ""));
-		linkCursosEnaLoiola.click();
+		professorCoursesLink.click();
 	}
 
 	@E("^listar os cursos exibidos$")
 	public void listarOsCursosExibidos() throws Throwable {
-		List<WebElement> cursosProfessor = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+		List<WebElement> professorCourses = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
 				By.xpath("//section[@class='card-prod || js-card-prod']/h1/a[not(contains(text(), 'Assinatura'))]")));
-		for (int i = 1; i <= cursosProfessor.size(); i++) {
-			String nomeCurso = driver.findElement(By.xpath("(//h1[@class='card-prod-title'])[" + i + "]")).getText();
-			String linkDetalhes = driver
+		for (int i = 1; i <= professorCourses.size(); i++) {
+			String courseName = driver.findElement(By.xpath("(//h1[@class='card-prod-title'])[" + i + "]")).getText();
+			String detailsLink = driver
 					.findElement(By.xpath("(//section[@class='card-prod || js-card-prod']/a)[" + i + "]"))
 					.getAttribute("href");
-			String valorTotalCurso = driver.findElement(By.xpath("(//div[@class='card-prod-price'])[" + i + "]"))
+			String courseTotalPrice = driver.findElement(By.xpath("(//div[@class='card-prod-price'])[" + i + "]"))
 					.getText();
-			if (!valorTotalCurso.contains("cursos em até 12x de")) {
-				Cursos.addCurso(new Curso(nomeCurso, linkDetalhes,
-						new BigDecimal(valorTotalCurso.replace("R$ ", "").replace(".", "").replace(",", "."))));
+			if (!courseTotalPrice.contains("cursos em até 12x de")) {
+				Courses.addCourse(new Course(courseName, detailsLink,
+						new BigDecimal(courseTotalPrice.replace("R$ ", "").replace(".", "").replace(",", "."))));
 			} else {
-				Cursos.addCurso(new Curso(nomeCurso, linkDetalhes, null));
+				Courses.addCourse(new Course(courseName, detailsLink, null));
 			}
 		}
 	}
 
 	@Entao("^eu valido se o valor do curso na pagina de listagem e igual ao valor na pagina de detalhes$")
 	public void euValidoSeOValorDoCursoNaPaginaDeListagemEIgualAoValorNaPaginaDeDetalhes() throws Throwable {
-		for (Curso curso : Cursos.getCursos()) {
-			if (curso.getValorTotalCurso() != null) {
-				driver.get(curso.getLinkDetalhes());
-				BigDecimal valorPaginaDetalhes = new BigDecimal(
+		for (Course course : Courses.getCourse()) {
+			if (course.getCourseTotalPrice() != null) {
+				driver.get(course.getDetailsLink());
+				BigDecimal detailsPagePrice = new BigDecimal(
 						wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='value']")))
 								.getText().replace("R$ ", "").replace(".", "").replace(",", "."));
 				assertTrue(
-						"Valor total na pagina de listagem: R$ " + curso.getValorTotalCurso()
-								+ "\nValor total na pagina de detalhes: R$ " + valorPaginaDetalhes,
-						curso.getValorTotalCurso().equals(valorPaginaDetalhes));
+						"Valor total na pagina de listagem: R$ " + course.getCourseTotalPrice()
+								+ "\nValor total na pagina de detalhes: R$ " + detailsPagePrice,
+						course.getCourseTotalPrice().equals(detailsPagePrice));
 			}
 		}
 	}
 
 	@E("^verifico que o total do valor parcelado do curso corresponde ao valor total$")
 	public void verificoQueOTotalDoValorParceladoDoCursoCorrespondeAoValorTotal() throws Throwable {
-		for (Curso curso : Cursos.getCursos()) {
-			if (curso.getValorTotalCurso() == null) {
-				driver.get(curso.getLinkDetalhes());
-				BigDecimal valorTotalPaginaDetalhes = new BigDecimal(
+		for (Course course : Courses.getCourse()) {
+			if (course.getCourseTotalPrice() == null) {
+				driver.get(course.getDetailsLink());
+				BigDecimal detailsPageTotalPrice = new BigDecimal(
 						wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='value']")))
 								.getText().replace("R$ ", "").replace(".", "").replace(",", "."));
-				BigDecimal valorParceladoPaginaDetalhes = new BigDecimal(
+				BigDecimal detailsPageInstallmentsPrice = new BigDecimal(
 						driver.findElement(By.xpath("//div[@class='cur-details-shopping-installments']")).getText()
 								.replace("ou 12x de R$ ", "").replace(".", "").replace(",", "."));
 				assertTrue(
-						"Curso: " + curso.getNomeCurso() + "\nValor parcelado na pagina de listagem: 12 x R$ "
-								+ valorParceladoPaginaDetalhes + " = R$ "
-								+ valorParceladoPaginaDetalhes.multiply(new BigDecimal(12)).setScale(0, RoundingMode.UP)
-								+ "\nValor total na pagina de detalhes: R$ " + valorTotalPaginaDetalhes,
-						valorParceladoPaginaDetalhes.multiply(new BigDecimal(12)).setScale(0, RoundingMode.UP)
-								.equals(valorTotalPaginaDetalhes));
+						"Curso: " + course.getCourseName() + "\nValor parcelado na pagina de listagem: 12 x R$ "
+								+ detailsPageInstallmentsPrice + " = R$ "
+								+ detailsPageInstallmentsPrice.multiply(new BigDecimal(12)).setScale(0, RoundingMode.UP)
+								+ "\nValor total na pagina de detalhes: R$ " + detailsPageTotalPrice,
+						detailsPageInstallmentsPrice.multiply(new BigDecimal(12)).setScale(0, RoundingMode.UP)
+								.equals(detailsPageTotalPrice));
 			}
 		}
 	}
@@ -125,12 +125,12 @@ public class Steps {
 	@E("^que a quantidade de cursos exibidos na pagina de listagem e igual a quantidade de cursos na pagina de detalhes$")
 	public void queAQuantidadeDeCursosExibidosNaPaginaDeListagemEIgualAQuantidadeDeCursosNaPaginaDeDetalhes()
 			throws Throwable {
-		int quantidadeCursosDetalhes = Cursos.getCursos().stream().filter(x -> !x.getNomeCurso().contains("Assinatura"))
-				.collect(Collectors.toList()).size();
+		int totalCoursesDetailsPage = Courses.getCourse().stream()
+				.filter(x -> !x.getCourseName().contains("Assinatura")).collect(Collectors.toList()).size();
 		assertTrue(
-				"Quantidade cursos disponiveis na listagem:" + quantidadeCursosDisponiveisListagem
-						+ "\nQuantidade de cursos na pagina de detalhes: " + quantidadeCursosDetalhes,
-				quantidadeCursosDisponiveisListagem == quantidadeCursosDetalhes);
+				"Quantidade cursos disponiveis na listagem:" + totalCoursesAvailableInListPage
+						+ "\nQuantidade de cursos na pagina de detalhes: " + totalCoursesDetailsPage,
+				totalCoursesAvailableInListPage == totalCoursesDetailsPage);
 	}
 
 	@Quando("^eu realizar a pesquisa na barra de busca$")
@@ -141,81 +141,52 @@ public class Steps {
 	}
 
 	@E("^selecionar o filtro '(.*?)'$")
-	public void selecionarOFiltro(String filtro) throws Throwable {
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'" + filtro + "')]")))
+	public void selecionarOFiltro(String filter) throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'" + filter + "')]")))
 				.click();
+		Thread.sleep(2000);
 	}
 
 	@Entao("^os resultados serao exibidos de acordo com o filtro selecionado$")
 	public void osResultadosSeraoExibidosDeAcordoComOFiltroSelecionado() throws Throwable {
-		List<String> resultadosFiltro = wait
+		List<String> filterResults = wait
 				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[@class='card-prod-title']/a")))
 				.stream().map(x -> x.getText()).collect(Collectors.toList());
-		for (String resultadoFiltro : resultadosFiltro) {
-			assertTrue("Resultado " + resultadoFiltro + " não é plano de assinatura.",
-					resultadoFiltro.toLowerCase().contains("assinatura"));
+		for (String filterResult : filterResults) {
+			assertTrue("Resultado " + filterResult + " não é plano de assinatura.",
+					filterResult.toLowerCase().contains("assinatura"));
 		}
 	}
 
 	@Entao("^valido que todos os resultados retornados pela API sao exibidos$")
 	public void validoQueTodosOsResultadosRetornadosPelaAPISaoExibidos() throws Throwable {
-		List<JSONObject> resultadosAPI = listaResultadosAPI();
-		assertTrue("Total de resultados na pagina: " + resultadosPagina.size() + "\nTotal de resultados API: "
-				+ resultadosAPI.size(), resultadosAPI.size() == resultadosPagina.size());
-	}
-
-	private List<JSONObject> listaResultadosCarregados() {
-		List<JSONObject> resultadosPaginaWeb = new ArrayList<>();
-		for (int i = 1; i <= driver.findElements(By.xpath("//section[@class='card-prod']")).size(); i++) {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("nome",
-					driver.findElement(By.xpath("(//section[@class='card-prod']/h1/a)[" + i + "]")).getText());
-			String valorParcelas = driver.findElement(By.xpath("(//section[@class='card-prod']/span)[" + i + "]"))
-					.getText();
-			if (valorParcelas.equals("R$ 0,00")) {
-				jsonObject.put("valor", "0.00");
-				jsonObject.put("parcelas", "");
-				jsonObject.put("valor_parcela", JSONObject.NULL);
-			} else {
-				BigDecimal valorParcela = new BigDecimal(valorParcelas.split("x R\\$ ")[1].replace(",", ".").trim());
-				BigDecimal quantidadeParcelas = new BigDecimal(
-						valorParcelas.split("x R\\$ ")[0].replace(",", ".").trim());
-				jsonObject.put("valor", valorParcela.multiply(quantidadeParcelas).toString());
-				jsonObject.put("parcelas", quantidadeParcelas.toString());
-				jsonObject.put("valor_parcela", valorParcela.toString());
-			}
-			jsonObject.put("url_comprar", driver
-					.findElement(By.xpath("(//section[@class='card-prod']/a[2])[" + i + "]")).getAttribute("href"));
-			resultadosPaginaWeb.add(jsonObject);
-		}
-		return resultadosPaginaWeb;
-
-	}
-
-	private List<JSONObject> carregaTodosResultadosPagina() throws InterruptedException {
-		boolean maisResultados = true;
-		while (maisResultados) {
-			Thread.sleep(2000);
-			((JavascriptExecutor) driver).executeScript("window.scrollTo(0,document.body.scrollHeight);", "");
-			WebElement botaoMaisResultados = wait
-					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button-more']")));
-			try {
-				botaoMaisResultados.click();
-			} catch (ElementNotInteractableException e) {
-				maisResultados = false;
-			}
-		}
-		return listaResultadosCarregados();
+		List<JSONObject> apiResults = listAPIResults();
+		assertTrue(
+				"Total de resultados na pagina: " + webPageResults + "\nTotal de resultados API: " + apiResults.size(),
+				apiResults.size() == webPageResults);
 	}
 
 	@E("^listar os resultados exibidos na pagina$")
 	public void listarOsResultadosExibidosNaPagina() throws Throwable {
-		resultadosPagina = carregaTodosResultadosPagina();
-	
+		boolean moreResults = true;
+		while (moreResults) {
+			Thread.sleep(2000);
+			((JavascriptExecutor) driver)
+					.executeScript("document.querySelector('button[class=button-more]').scrollIntoView(false);", "");
+			WebElement buttonMoreResults = wait
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button-more']")));
+			try {
+				buttonMoreResults.click();
+			} catch (ElementNotInteractableException e) {
+				moreResults = false;
+			}
+		}
+		webPageResults = (Long) ((JavascriptExecutor) driver)
+				.executeScript("return document.querySelectorAll('section[class=card-prod]').length", "");
 	}
 
-	private List<JSONObject> listaResultadosAPI() {
-		List<JSONObject> resultadosAPI = new ArrayList<>();
+	private List<JSONObject> listAPIResults() {
+		List<JSONObject> apiResults = new ArrayList<>();
 		boolean hasMore = true;
 		int i = 1;
 		while (hasMore) {
@@ -224,11 +195,11 @@ public class Steps {
 							.get("https://www.estrategiaconcursos.com.br/pesquisa/main/json/").then().statusCode(200)
 							.extract().body().asString());
 			JSONArray responseJSON = jsonResponse.getJSONArray("result");
-			responseJSON.forEach(x -> resultadosAPI.add(new JSONObject(x.toString())));
+			responseJSON.forEach(x -> apiResults.add(new JSONObject(x.toString())));
 			hasMore = jsonResponse.getBoolean("hasMore");
 			i++;
 		}
-		return resultadosAPI;
+		return apiResults;
 	}
 
 }
