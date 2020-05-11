@@ -15,7 +15,7 @@ Funcionalidade: Busca, filtragem e exibicao de detalhes dos cursos na homepage
     E que a quantidade de cursos exibidos na pagina de listagem e igual a quantidade de cursos na pagina de detalhes
 
   @AplicacaoDescontroPrecoAVista
-  Cenario: Validar filtros do resultado de busca
+  Cenario: Validar valores de descontos no pagamento a vista
     Quando eu realizar a pesquisa na barra de busca
       | pesquisa |
       | abin     |
@@ -23,7 +23,7 @@ Funcionalidade: Busca, filtragem e exibicao de detalhes dos cursos na homepage
     Entao valido o desconto no pagamento a vista
 
   @FiltroResultadoBusca
-  Cenario: Validar filtros do resultado de busca
+  Cenario: Validar filtro dos resultado de busca
     Quando eu realizar a pesquisa na barra de busca
       | pesquisa        |
       | Policia Militar |

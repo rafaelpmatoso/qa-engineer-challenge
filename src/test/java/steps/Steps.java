@@ -144,7 +144,9 @@ public class Steps {
 	public void selecionarOFiltro(String filter) throws Throwable {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'" + filter + "')]")))
 				.click();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
+		wait.until(webdriver -> ((JavascriptExecutor) webdriver).executeScript("return document.readyState;", "")
+				.equals("complete"));
 	}
 
 	@Entao("^os resultados serao exibidos de acordo com o filtro selecionado$")
