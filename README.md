@@ -39,6 +39,8 @@ You will need to update the chromedriver executable path in the **config.propert
 
 Update the **webdriver.location** property with the path of executable downloaded from https://chromedriver.chromium.org/downloads
 
+**IMPORTANT**: *The chromedriver should be in the same version of the Google Chrome installed in the machine.*
+
     ex: webdriver.location=//Users//myname//Documents//chromedriver
 
 Type the command below and wait for the project to build and start running the tests.
