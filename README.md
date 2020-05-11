@@ -10,8 +10,8 @@ in analysing if the product under development is functional and reliable.
 
 Using Git:
 
-    git clone https://github.com/cucumber/cucumber-java-skeleton.git
-    cd cucumber-java-skeleton
+    git clone https://github.com/rapholtz/qa-engineer-challenge.git
+    cd qa-engineer-challenge
 
 Or simply downloading the [zip file](https://github.com/rapholtz/qa-engineer-challenge.git).
 
