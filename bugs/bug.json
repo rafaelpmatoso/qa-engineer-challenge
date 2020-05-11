@@ -28,10 +28,13 @@
         },
         {
             "id": 4,
-            "titulo": "Melhoria na filtragem de resultados dos cursos",
-            "descricao": "Na página de listagem dos cursos é exibida a quantidade total de cursos + assinaturas e na página de detalhes do professor é exibido somente a quantidade de cursos.",
-            "detalhes": "Criar categorias cursos e assinaturas similar ao da página de Resultados de Busca",
-            "evidencias": ""
+            "titulo": "Melhoria na negociação de conteúdos da API",
+            "descricao": "A API REST retorna um JSON no response body e 'text/html' no response header, mesmo quando o Content-Type 'application/json' é especificado no request header.
+            "detalhes": "Aplicar boas práticas de content negotiation da arquitetura REST. Referencia: https://restfulapi.net/content-negotiation/",
+            "evidencias":  [
+                "valor_total_com_arredondamento.jpg",
+                "valor_total_sem_arredondamento.jpg"
+            ]
         }
     ]
 }
