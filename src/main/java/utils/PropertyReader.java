@@ -16,7 +16,7 @@ public class PropertyReader {
 			property = properties.getProperty(key);
 			if (property == null) {
 				throw new IllegalArgumentException(
-						"Propriedade \"" + key + "\" nao encontrada no arquivo " + propertiesFile.getPath());
+						"Property \"" + key + "\" not found in the file " + propertiesFile.getPath());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
