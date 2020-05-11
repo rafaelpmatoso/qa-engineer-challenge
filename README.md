@@ -8,6 +8,8 @@ I tried to develop the project in *Cypress* ([link to the repository](https://gi
 
 So I decided to use something I'm more familiar with, Java and Selenium.
 
+Suspicious bugs and improvement suggestions are registered in the [bugs.json](https://github.com/rapholtz/qa-engineer-challenge/blob/master/bugs/bug.json) file.
+
 ## Getting Started
 
 ### Download the project from repository
