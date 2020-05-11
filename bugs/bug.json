@@ -31,10 +31,21 @@
             "titulo": "Melhoria na negociacao de conteudos da API",
             "descricao": "A API REST retorna um JSON no response body e 'text/html' no response header, mesmo quando o Content-Type 'application/json' e especificado no request header.",
             "detalhes": "Aplicar boas praticas de content negotiation da arquitetura REST. Referencia: https://restfulapi.net/content-negotiation/",
-            "evidencias":  [
+            "evidencias": [
                 "postman_json_response.jpg",
                 "postman_response_header.jpg",
                 "restassured_jsonparse-exception.jpg"
+            ]
+        },
+        {
+            "id": 5,
+            "titulo": "Inconsistencia nos valores de desconto para pagamento a vista",
+            "descricao": "O arredondamento dos valores de descontos para o pagamento a vista nos pacotes de cursos estao apresentando inconsistencias, confrome evidencias abaixo",
+            "detalhes": "",
+            "evidencias":  [
+                "valor_desconto_pagamento_a_vista_1.jpg",
+                "valor_desconto_pagamento_a_vista_2.jpg",
+                "valor_desconto_pagamento_a_vista_3.jpg"
             ]
         }
     ]

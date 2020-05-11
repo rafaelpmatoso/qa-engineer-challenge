@@ -192,17 +192,20 @@ public class Steps {
 
 	@Entao("^valido o desconto no pagamento a vista$")
 	public void validoODescontoNoPagamentoAVista() throws Throwable {
-		BigDecimal valorTotal = new BigDecimal(
+		BigDecimal totalPrice = new BigDecimal(
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='from']"))).getText()
 						.trim().replaceAll("de R\\$ ", "").replace(".", "").replace(",", "."));
-		BigDecimal valorComDesconto = new BigDecimal(driver.findElement(By.xpath("//div[@class='value']")).getText()
+		BigDecimal discountedPrice = new BigDecimal(driver.findElement(By.xpath("//div[@class='value']")).getText()
 				.trim().replaceAll("por R\\$ ", "").replace(".", "").replace(",", "."));
-		String porcentagemDesconto = driver.findElement(By.xpath("//div[@class='details']")).getText().trim();
-		BigDecimal desconto = new BigDecimal(
-				porcentagemDesconto.substring(porcentagemDesconto.indexOf("(") + 1, porcentagemDesconto.length() - 2));
-		BigDecimal valorDescontoCalculado = valorTotal.multiply(desconto).multiply(new BigDecimal("0.01")).setScale(0,
-				RoundingMode.UP);
-		assertTrue(valorComDesconto.equals(valorTotal.subtract(valorDescontoCalculado)));
+		String discountPercentage = driver.findElement(By.xpath("//div[@class='details']")).getText().trim();
+		BigDecimal discount = new BigDecimal(
+				discountPercentage.substring(discountPercentage.indexOf("(") + 1, discountPercentage.length() - 2));
+		BigDecimal discountedPriceCalculated = totalPrice.multiply(discount).multiply(new BigDecimal("0.01"))
+				.setScale(0, RoundingMode.UP);
+		assertTrue(
+				"Valor desconto aplicado:" + discountedPrice + "\nValor desconto calculado: "
+						+ totalPrice.subtract(discountedPriceCalculated),
+				discountedPrice.equals(totalPrice.subtract(discountedPriceCalculated)));
 	}
 
 	private List<JSONObject> listAPIResults() {
