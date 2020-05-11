@@ -4,7 +4,7 @@
             "id": 1,
             "titulo": "Inconsistencia no arredondamento de valores totais dos cursos",
             "descricao": "Alguns cursos nao estao com o valor total das somas das parcelas arredondado enquanto a maioria sim",
-            "detalhes": "Curso sem arredondamento do valor: Assinatura Ilimitada 1 Ano - Cartão até 12x de R$ 199,97 = R$ 2.399,64. Curso com arredondamento do valor: Inglês p/ CBM-SE (Oficial) Com Videoaulas - 2020 - 12x de R$ 9,33 = R$ 112,00",
+            "detalhes": "Curso sem arredondamento do valor: Assinatura Ilimitada 1 Ano - Cartão ate 12x de R$ 199,97 = R$ 2.399,64. Curso com arredondamento do valor: Inglês p/ CBM-SE (Oficial) Com Videoaulas - 2020 - 12x de R$ 9,33 = R$ 112,00",
             "evidencias": [
                 "valor_total_com_arredondamento.jpg",
                 "valor_total_sem_arredondamento.jpg"
@@ -13,7 +13,7 @@
         {
             "id": 2,
             "titulo": "Erro de uncaught:exception no Cypress",
-            "descricao": "Na tentativa de automação dos teste pelo Cypress, foram encontrados erros de uncaught:exception no site. Mesmo seguindo a documentação da ferramanta os erros persistiram. Os erros são ignorados, mas as ações (click, asserções, etc) não são executados.",
+            "descricao": "Na tentativa de automacao dos teste pelo Cypress, foram encontrados erros de uncaught:exception no site. Mesmo seguindo a documentacao da ferramanta os erros persistiram. Os erros são ignorados, mas as ações (click, asserções, etc) não são executados.",
             "detalhes": "Workarounds recomendados: https://docs.cypress.io/guides/references/error-messages.html#Page-Load-Errors e https://docs.cypress.io/api/events/catalog-of-events.html#Examples",
             "evidencias": [
                 "cypress_uncaught_exception.jpg"
@@ -22,18 +22,19 @@
         {
             "id": 3,
             "titulo": "Melhoria na filtragem de resultados dos cursos",
-            "descricao": "Na página de listagem dos cursos é exibida a quantidade total de cursos + assinaturas e na página de detalhes do professor é exibido somente a quantidade de cursos.",
-            "detalhes": "Criar categorias cursos e assinaturas similar ao da página de Resultados de Busca",
+            "descricao": "Na pagina de listagem dos cursos e exibida a quantidade total de cursos + assinaturas e na pagina de detalhes do professor e exibido somente a quantidade de cursos.",
+            "detalhes": "Criar categorias cursos e assinaturas similar ao da pagina de Resultados de Busca",
             "evidencias": ""
         },
         {
             "id": 4,
-            "titulo": "Melhoria na negociação de conteúdos da API",
-            "descricao": "A API REST retorna um JSON no response body e 'text/html' no response header, mesmo quando o Content-Type 'application/json' é especificado no request header.
-            "detalhes": "Aplicar boas práticas de content negotiation da arquitetura REST. Referencia: https://restfulapi.net/content-negotiation/",
+            "titulo": "Melhoria na negociacao de conteudos da API",
+            "descricao": "A API REST retorna um JSON no response body e 'text/html' no response header, mesmo quando o Content-Type 'application/json' e especificado no request header.",
+            "detalhes": "Aplicar boas praticas de content negotiation da arquitetura REST. Referencia: https://restfulapi.net/content-negotiation/",
             "evidencias":  [
-                "valor_total_com_arredondamento.jpg",
-                "valor_total_sem_arredondamento.jpg"
+                "postman_json_response.jpg",
+                "postman_response_header.jpg",
+                "restassured_jsonparse-exception.jpg"
             ]
         }
     ]
