@@ -25,7 +25,7 @@ Unzip the downloaded file in your computer.
 
 Open a command line utility and navigate to the downloaded directory.
 
-If you are on MacOS change the directory permissions using the following command:
+Tip: If you are using MacOS change the directory permissions using the following command:
     
     chmod +x mvnw
 
@@ -41,7 +41,7 @@ Type the command below and wait for the project to build and start running the t
 
 ## Built With
 
-* [Java 1.8](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html) - The programming language used
+* [Java](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html) - The programming language used
 * [Eclipse](https://www.eclipse.org/) - The Java IDE
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Cucumber](https://cucumber.io/) - Behavior Driven Development (BDD) framework
