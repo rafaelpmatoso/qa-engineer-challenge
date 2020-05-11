@@ -4,7 +4,7 @@ This project is intended to demonstrate my expertise in manual and automation te
 Behavior Driven development (BDD) by writing Gherkin based features for test automation, as well as my quality oriented mindset
 in analysing if the product under development is functional and reliable.
 
-I tried to develop the project in *Cypress* ([link to the repository](https://github.com/rapholtz/qa-engineer-challenge-cypress.git)), but the site kept throwing uncaught exceptions and seeing as Cypress is an e2e testing tool, these errors couldn't be ignored.
+I tried to develop the project in *Cypress* ([link to the repository](https://github.com/rapholtz/qa-engineer-challenge-cypress.git)) because it offers a complete testing environment that speeds up the automation process. But the site kept throwing uncaught exceptions and seeing as Cypress is an e2e testing tool, these errors couldn't be ignored.
 
 So I decided to use something I'm more familiar with, Java and Selenium.
 
